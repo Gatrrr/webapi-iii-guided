@@ -16,6 +16,23 @@ function gitLogger(req, res, next) {
   next()
 }
 
+function gateKeeper(req, res, next){
+  const password = req.headers.password || '';
+  if(password.toLowerCase() === ' mellon '){
+    next();
+  } else{
+    res.status(400).json({ you: 'cannot pass'})
+  }
+  if(password === ''){
+    next();
+  } else {
+    res.status(401).json({you:'did not enter a password'})
+  }
+ }
+ 
+ 
+
+server.use(gateKeeper);
 server.use(express.json());
 server.use(helmet());
 server.use(dateLogger);
