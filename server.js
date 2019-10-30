@@ -1,11 +1,25 @@
 const express = require('express'); // importing a CommonJS module
-
+const helmet = require('helmet');
 const hubsRouter = require('./hubs/hubs-router.js');
 
 const server = express();
 
-server.use(express.json());
+function dateLogger(res, res, next) {
+  console.log(new Date().toISOString();)
 
+  next()
+}
+
+function gitLogger(req, res, next) {
+  console.log(new get('/api/hubs').toISOString());
+  
+  next()
+}
+
+server.use(express.json());
+server.use(helmet());
+server.use(dateLogger);
+server.use(gitLogger);
 server.use('/api/hubs', hubsRouter);
 
 server.get('/', (req, res) => {
@@ -16,5 +30,7 @@ server.get('/', (req, res) => {
     <p>Welcome${nameInsert} to the Lambda Hubs API</p>
     `);
 });
+
+
 
 module.exports = server;
